@@ -1,8 +1,8 @@
 #include <iostream>
-#include "Card.cpp"
+#include "CardsActionManager.hpp"
 
-int main() 
-{
-std::cout << "Start" << std::endl;
+CardsActionManager CAM;
 
+int main() {
+  std::cout << "Hello World!\n";
 }
