@@ -13,7 +13,7 @@ add_compile_options(${FLAGS})
 ##add_library(dbEngineLib STATIC Db.cpp)
 #add_library(menuLib STATIC Menu.cpp Menu_cmds.cpp)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp Player.cpp)
 #target_link_libraries(${PROJECT_NAME} dbEngineLib menuLib)
 
 #$add_executable(${PROJECT_NAME}-ut test.cpp)

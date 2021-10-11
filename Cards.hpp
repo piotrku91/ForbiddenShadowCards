@@ -15,6 +15,7 @@ private:
 public:
     std::string getName() const { return characterName_; }
     size_t getLifePoints() const { return lifePoints_; };
+    bool isAlive() const {return lifePoints_>0;}
 
     CharacterCard(const std::string& characterName, size_t lifePoints)
         : characterName_{characterName}, lifePoints_{lifePoints} {};
@@ -32,6 +33,8 @@ protected:
 public:
     Card(const std::string& cardName, const std::shared_ptr<CharacterCard>& characterCard, size_t pointCost,  size_t powerPoints, bool multi, const std::string& description)
         : Name_{cardName}, Character_{characterCard}, pointCost_{pointCost}, powerPoints_{powerPoints}, Multi_{multi}, Desc_{description} {};
+
+         std::string getName() const { return Name_; };
 };
 
 class BattleCard : public Card {
