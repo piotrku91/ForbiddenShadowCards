@@ -37,7 +37,7 @@ void Player::swapCardToPoint(size_t slotIndex, size_t Multiplicator) {
 
 Action Player::tryUseCard(size_t slotIndex) {
     if (skillsCardsSlots.at(slotIndex)->getPointCost() >= actionPoints_) {
-        actionPoints_ -= skillsCardsSlots.at(slotIndex)->getPointCost();
+        DecrasePoints(skillsCardsSlots.at(slotIndex)->getPointCost());
         return Action::CardUseAction;
     }
     return Action::NoPointsToAction;
