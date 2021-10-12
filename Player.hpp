@@ -5,6 +5,7 @@
 #include <stack>
 #include <vector>
 #include "Cards.hpp"
+#include "Actions.hpp"
 
 class Player {
 private:
@@ -21,7 +22,8 @@ public:
     size_t cardsLeft() const;
     const std::vector<std::shared_ptr<Card>>& getActualSlots();
 
-    void fillSlots();
+    Action fillSlots();
+    Action tryUseCard(size_t slotIndex);
     void swapCardToPoint(size_t slotIndex,size_t Multiplicator=1);
     void DecrasePoints(size_t amount);
     
