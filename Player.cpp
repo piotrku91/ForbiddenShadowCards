@@ -50,13 +50,14 @@ void Player::DecrasePoints(size_t amount) {
     actionPoints_ -= amount;
 }
 
-Player::Player(std::shared_ptr<CharacterCard> characterCard1, std::shared_ptr<CharacterCard> characterCard2, std::shared_ptr<CharacterCard> characterCard3, std::vector<std::shared_ptr<Card>> Cards)
-    : actionPoints_(0) {
-    characterCardsSet[0] = characterCard1;
-    characterCardsSet[1] = characterCard2;
-    characterCardsSet[2] = characterCard3;
+void Player::loadTeamToBattle(const std::string& teamName)
+ {
+     
+   // characterCardsSet[0] = characterCard1;
+   // characterCardsSet[1] = characterCard2;
+    //characterCardsSet[2] = characterCard3;
 
-    for (auto& card : Cards) {
-        skillsCardsSet.push(card);
-    }
+  //  for (auto& card : Cards) {
+  //      skillsCardsSet.push(card);
+  //  }
 }

@@ -4,7 +4,7 @@
 CardsActionManager CAM;
 
 int main() {
-  std::cout << "Gracz 1!\n";
+  /* std::cout << "Gracz 1!\n";
 CAM.Player1.fillSlots();
   for (const auto& slot :CAM.Player1.getActualSlots())
   {
@@ -17,5 +17,5 @@ CAM.Player1.fillSlots();
    std::cout << slot->getName() << "|\n";
   }
 
-  std::cout << "Kart " << CAM.Player1.cardsLeft()  << "\n";
+  std::cout << "Kart " << CAM.Player1.cardsLeft()  << "\n"; */
 }
