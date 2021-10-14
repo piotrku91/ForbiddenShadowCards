@@ -1,4 +1,5 @@
 #include "Player.hpp"
+using PlayerTeamMap = std::tuple< std::shared_ptr<CharacterCard>, std::shared_ptr<CharacterCard>, std::shared_ptr<CharacterCard>, std::vector<std::shared_ptr<Card>> >;
 
 size_t Player::cardsLeft() const {
     return skillsCardsSet.size();
@@ -50,14 +51,18 @@ void Player::DecrasePoints(size_t amount) {
     actionPoints_ -= amount;
 }
 
-void Player::loadTeamToBattle(const std::string& teamName)
- {
-     
-   // characterCardsSet[0] = characterCard1;
-   // characterCardsSet[1] = characterCard2;
-    //characterCardsSet[2] = characterCard3;
+void Player::loadTeamToBattle(const std::string& teamName) {
+    if (playerTeams.find(teamName) != playerTeams.end()) {
+        characterCardsSet[0] = std::get<0>(playerTeams[teamName]);
+        characterCardsSet[1] = std::get<1>(playerTeams[teamName]);
+        characterCardsSet[2] = std::get<2>(playerTeams[teamName]);
 
-  //  for (auto& card : Cards) {
-  //      skillsCardsSet.push(card);
-  //  }
+        for (auto& card : std::get<3>(playerTeams[teamName])) {
+            skillsCardsSet.push(card);
+        }
+    }
+}
+
+PlayerTeamMap Player::loadTeamToEdit(const std::string& teamName) {
+        return PlayerTeamMap(std::get<0>(playerTeams[teamName]),std::get<1>(playerTeams[teamName]),std::get<2>(playerTeams[teamName]),std::get<3>(playerTeams[teamName]));
 }
