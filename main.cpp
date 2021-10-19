@@ -1,21 +1,29 @@
 #include <iostream>
 #include "CardsActionManager.hpp"
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_timer.h>
+
 CardsActionManager CAM;
 
 int main() {
-  /* std::cout << "Gracz 1!\n";
-CAM.Player1.fillSlots();
-  for (const auto& slot :CAM.Player1.getActualSlots())
-  {
-   std::cout << slot->getName() << "|\n";
-  }
-  CAM.Player1.swapCardToPoint(1);
-  CAM.Player1.fillSlots();
-  for (const auto& slot :CAM.Player1.getActualSlots())
-  {
-   std::cout << slot->getName() << "|\n";
-  }
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        printf("error initializing SDL: %s\n", SDL_GetError());
+    }
 
-  std::cout << "Kart " << CAM.Player1.cardsLeft()  << "\n"; */
+    SDL_Window* window = SDL_CreateWindow("FGame", 0, 0, 640, 480, SDL_WINDOW_SHOWN);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+
+
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 200, 255);
+
+    SDL_RenderPresent(renderer);
+
+    SDL_Delay(3000);
+
+    SDL_Quit();
+
+    return 0;
 }
