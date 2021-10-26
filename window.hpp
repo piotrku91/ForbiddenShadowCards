@@ -39,6 +39,22 @@ public:
         SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
     }
 
+        void render(int posX, int posY, int sizeW, int sizeH, SDL_Texture* texture, int srcShiftX=0, int srcShiftY=0) {
+        SDL_Rect source_rect{srcShiftX,srcShiftY,sizeW,sizeH};
+       // SDL_QueryTexture(texture, NULL, NULL, &source_rect.w, &source_rect.h);
+        SDL_Rect dest_rect{posX, posY, source_rect.w, source_rect.h};
+        SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
+    }
+
+    SDL_Texture* loadTextureFromFile(const std::string& Path) {
+        SDL_Texture* texture{nullptr};
+        texture = IMG_LoadTexture(renderer_, Path.c_str());
+        if (!texture) {
+            std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
+        };
+        return texture;
+    }
+
     void destroy() {
         SDL_DestroyWindow(window_);
         isDestroyed = true;
@@ -46,6 +62,10 @@ public:
 
     void clear() {
         SDL_RenderClear(renderer_);
+    }
+
+    void draw() {
+        SDL_RenderPresent(renderer_);
     }
 
     SDL_Renderer* getRenderer() { return renderer_; };
