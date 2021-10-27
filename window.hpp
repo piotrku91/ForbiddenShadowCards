@@ -6,7 +6,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
-
+#include "Object.hpp"
+// TO DO: Move functions to cpp file
 class Window final {
 private:
     SDL_Window* window_;
@@ -39,12 +40,20 @@ public:
         SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
     }
 
-        void render(int posX, int posY, int sizeW, int sizeH, SDL_Texture* texture, int srcShiftX=0, int srcShiftY=0) {
-        SDL_Rect source_rect{srcShiftX,srcShiftY,sizeW,sizeH};
-       // SDL_QueryTexture(texture, NULL, NULL, &source_rect.w, &source_rect.h);
+    void render(int posX, int posY, int sizeW, int sizeH, SDL_Texture* texture, int srcShiftX = 0, int srcShiftY = 0) {
+        SDL_Rect source_rect{srcShiftX, srcShiftY, sizeW, sizeH};
         SDL_Rect dest_rect{posX, posY, source_rect.w, source_rect.h};
         SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
     }
+
+
+    void render(Object& objectToRender) {
+        SDL_Rect source_rect{objectToRender.getTextureOffsetX(), objectToRender.getTextureOffsetY(), objectToRender.getObjectRect().w, objectToRender.getObjectRect().h};
+        objectToRender.getObjectRect().w = source_rect.w;
+        objectToRender.getObjectRect().h = source_rect.h;
+        SDL_RenderCopy(renderer_, objectToRender.getObjectTexture(), &source_rect, &objectToRender.getObjectRect());  
+    }
+
 
     SDL_Texture* loadTextureFromFile(const std::string& Path) {
         SDL_Texture* texture{nullptr};
