@@ -5,9 +5,7 @@
 #include "window.hpp"
 #include "TextureManager.hpp"
 #include "Raw.hpp"
-
-
-
+#include "Color.hpp"
 
 CardsActionManager CAM;
 
@@ -22,15 +20,17 @@ TextureMgr.addTexture("first",mainWindow.loadTextureFromFile("textures/jeden.jpg
 
 // Create textured objects
 Objects.push_back(std::make_shared<TexturedObject>(TexturedObject{"texturowy 1",32,32,128,128,TextureMgr["first"]}));
-Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"texturowy 2",200,200,128,128}));
-
-
+Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"Player 2 area", 350, 20, 430, 150, Color{0,0,100,100}}));
+Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"Player 1 area", 20, 430, 430, 150, Color{0,0,100,100}}));
 // Render section
 mainWindow.clear();
 
+pq::timeTest TT;
+TT.start();
 for (auto& ob : Objects)
 {mainWindow.render(ob);};
 mainWindow.draw();
+std::cout << TT.stop() <<"\n";
 
 SDL_Delay(3000);
 

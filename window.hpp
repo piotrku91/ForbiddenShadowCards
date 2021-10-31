@@ -8,7 +8,7 @@
 #include <SDL2/SDL_timer.h>
 #include "Raw.hpp"
 #include "piotrq.h"
-// TO DO: Move functions to cpp file
+
 class Window final {
 private:
     SDL_Window* window_;
@@ -16,76 +16,25 @@ private:
     bool isDestroyed;
 
 public:
-    Window(const std::string& Caption, int sizeW, int sizeH)
-        : isDestroyed(false) {
-        window_ = SDL_CreateWindow(Caption.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, sizeW, sizeH, SDL_WINDOW_SHOWN);
-        if (window_ == NULL) {
-            std::cout << "Window Error: " << SDL_GetError() << std::endl;
-            throw;
-        }
-        renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
-    };
 
-    ~Window() {
-        if (!isDestroyed) {
-            destroy();
-        };
-    }
+    Window(const std::string& Caption, int sizeW, int sizeH);
 
-    void render(int posX, int posY, SDL_Texture* texture) {
-        SDL_Rect source_rect;
-        source_rect.x = 0;
-        source_rect.y = 0;
-        SDL_QueryTexture(texture, NULL, NULL, &source_rect.w, &source_rect.h);
-        SDL_Rect dest_rect{posX, posY, source_rect.w, source_rect.h};
-        SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
-    }
+    ~Window();
 
-    void render(int posX, int posY, int sizeW, int sizeH, SDL_Texture* texture, int srcShiftX = 0, int srcShiftY = 0) {
-        SDL_Rect source_rect{srcShiftX, srcShiftY, sizeW, sizeH};
-        SDL_Rect dest_rect{posX, posY, source_rect.w, source_rect.h};
-        SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
-    }
+    void render(int posX, int posY, SDL_Texture* texture);
 
-    void render(std::shared_ptr<RawObject>& objectToRender) {
-        
-        if (auto ObjectTest = pq::isTargetClassObject<RawObject, TexturedObject>(objectToRender)) {
-            SDL_Rect source_rect{ObjectTest->getTextureOffsetX(), ObjectTest->getTextureOffsetY(), ObjectTest->getObjectRect().w, ObjectTest->getObjectRect().h};
-            ObjectTest->getObjectRect().w = source_rect.w;
-            ObjectTest->getObjectRect().h = source_rect.h;
-            SDL_RenderCopy(renderer_, ObjectTest->getObjectTexture(), &source_rect, &ObjectTest->getObjectRect());
-        };
+    void render(int posX, int posY, int sizeW, int sizeH, SDL_Texture* texture, int srcShiftX = 0, int srcShiftY = 0);
 
-        
-        if (auto ObjectTest = pq::isTargetClassObject<RawObject, SimpleRectObject>(objectToRender)) {
-             SDL_SetRenderDrawColor(renderer_, ObjectTest->getColor().getR(), ObjectTest->getColor().getG(), ObjectTest->getColor().getB(), ObjectTest->getColor().getA());
-            SDL_RenderFillRect(renderer_, &ObjectTest->getObjectRect());
-        } 
-           
-    }
+    void render(std::shared_ptr<RawObject>& objectToRender);
 
-    SDL_Texture* loadTextureFromFile(const std::string& Path) {
-        SDL_Texture* texture{nullptr};
-        texture = IMG_LoadTexture(renderer_, Path.c_str());
-        if (!texture) {
-            std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
-        };
-        return texture;
-    }
+    SDL_Texture* loadTextureFromFile(const std::string& Path);
 
-    void destroy() {
-        SDL_DestroyWindow(window_);
-        isDestroyed = true;
-    }
+    void destroy() ;
 
-    void clear() {
-        SDL_RenderClear(renderer_);
-    }
+    void clear() ;
 
-    void draw() {
-        SDL_RenderPresent(renderer_);
-    }
+    void draw() ;
 
-    SDL_Renderer* getRenderer() { return renderer_; };
-    SDL_Window* getWindow() const { return window_; };
+    SDL_Renderer* getRenderer();
+    SDL_Window* getWindow() const;
 };

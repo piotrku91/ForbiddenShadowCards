@@ -10,7 +10,7 @@ add_compile_options(${FLAGS})
 find_package(SDL2 REQUIRED)
 include_directories(${PROJECT_NAME} ${SDL2_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} main.cpp Player.cpp)
+add_executable(${PROJECT_NAME} main.cpp window.cpp Player.cpp )
 target_link_libraries(
     ${PROJECT_NAME}
     GL
