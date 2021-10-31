@@ -6,7 +6,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
-#include "Object.hpp"
+#include "Raw.hpp"
+#include "piotrq.h"
 // TO DO: Move functions to cpp file
 class Window final {
 private:
@@ -46,14 +47,22 @@ public:
         SDL_RenderCopy(renderer_, texture, &source_rect, &dest_rect);
     }
 
+    void render(std::shared_ptr<RawObject>& objectToRender) {
+        
+        if (auto ObjectTest = pq::isTargetClassObject<RawObject, TexturedObject>(objectToRender)) {
+            SDL_Rect source_rect{ObjectTest->getTextureOffsetX(), ObjectTest->getTextureOffsetY(), ObjectTest->getObjectRect().w, ObjectTest->getObjectRect().h};
+            ObjectTest->getObjectRect().w = source_rect.w;
+            ObjectTest->getObjectRect().h = source_rect.h;
+            SDL_RenderCopy(renderer_, ObjectTest->getObjectTexture(), &source_rect, &ObjectTest->getObjectRect());
+        };
 
-    void render(Object& objectToRender) {
-        SDL_Rect source_rect{objectToRender.getTextureOffsetX(), objectToRender.getTextureOffsetY(), objectToRender.getObjectRect().w, objectToRender.getObjectRect().h};
-        objectToRender.getObjectRect().w = source_rect.w;
-        objectToRender.getObjectRect().h = source_rect.h;
-        SDL_RenderCopy(renderer_, objectToRender.getObjectTexture(), &source_rect, &objectToRender.getObjectRect());  
+        
+        if (auto ObjectTest = pq::isTargetClassObject<RawObject, SimpleRectObject>(objectToRender)) {
+             SDL_SetRenderDrawColor(renderer_, ObjectTest->getColor().getR(), ObjectTest->getColor().getG(), ObjectTest->getColor().getB(), ObjectTest->getColor().getA());
+            SDL_RenderFillRect(renderer_, &ObjectTest->getObjectRect());
+        } 
+           
     }
-
 
     SDL_Texture* loadTextureFromFile(const std::string& Path) {
         SDL_Texture* texture{nullptr};

@@ -3,28 +3,36 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include "Color.hpp"
 
 // TO DO: Move functions to cpp file
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 class RawObject {
 protected:
     std::string objectName_;
     SDL_Rect objectRect_;
+
 public:
     virtual SDL_Rect& getObjectRect() { return objectRect_; };
+    virtual std::string getObjectName() { return objectName_; };
 
-    
     RawObject(const std::string& objectName, int posX, int posY, int sizeW, int sizeH)
-        : objectName_{objectName}, objectRect_{posX, posY, sizeW, sizeH}  {};
+        : objectName_{objectName}, objectRect_{posX, posY, sizeW, sizeH} {};
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+class SimpleRectObject : public RawObject {
+protected:
+    Color objectColor_;
+
+public:
+
+const Color& getColor() {return objectColor_;};
+
+    SimpleRectObject(const std::string& objectName, int posX, int posY, int sizeW, int sizeH, Color&& objectColor)
+        : RawObject{objectName, posX, posY, sizeW, sizeH}, objectColor_{objectColor} {};
 };
 
-class SimpleRectObject: public RawObject
-{
-    public:
-SimpleRectObject(const std::string& objectName, int posX, int posY, int sizeW, int sizeH)
-        : RawObject{objectName, posX, posY, sizeW, sizeH} {};
-};
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 class TexturedObject : public RawObject {
 private:
     SDL_Texture* objectTexture_;
@@ -49,6 +57,5 @@ public:
     SDL_Texture* getObjectTexture() { return objectTexture_; };
     int getTextureOffsetX() { return sourceTextOffsetX_; };
     int getTextureOffsetY() { return sourceTextOffsetY_; };
-
-    
 };
+///////////////////////////////////////////////////////////////////////////////////////////////////////
