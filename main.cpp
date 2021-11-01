@@ -12,7 +12,7 @@ CardsActionManager CAM;
 int main() {
 std::vector<std::shared_ptr<RawObject>> Objects;
 // Load main window
-Window mainWindow{"New game", 800, 600};
+Window mainWindow{"New game", 1366, 786};
 
 // Init texture manager and load textures
 TextureManager TextureMgr;

@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_ttf.h>
 #include "Color.hpp"
 
 // TO DO: Move functions to cpp file
@@ -25,11 +26,33 @@ protected:
     Color objectColor_;
 
 public:
-
-const Color& getColor() {return objectColor_;};
+    const Color& getColor() { return objectColor_; };
 
     SimpleRectObject(const std::string& objectName, int posX, int posY, int sizeW, int sizeH, Color&& objectColor)
         : RawObject{objectName, posX, posY, sizeW, sizeH}, objectColor_{objectColor} {};
+};
+
+class TextObject : public RawObject {
+protected:
+    Color objectColor_;
+    SDL_Surface* message_;
+
+public:
+    const Color& getColor() { return objectColor_; };
+     SDL_Surface* getSurface() { return message_; };
+
+    void changeText(const std::string text, TTF_Font* font, Color&& objectColor) {
+        free();
+         message_ = TTF_RenderText_Blended(font, text.c_str(), SDL_Color{objectColor.getR(), objectColor.getG(), objectColor.getB(), objectColor.getA()});
+    }
+
+    TextObject(const std::string& objectName, int posX, int posY, int sizeW, int sizeH, const std::string text, TTF_Font* font, Color&& objectColor)
+        : RawObject{objectName, posX, posY, sizeW, sizeH}, objectColor_{objectColor} {
+        message_ = TTF_RenderText_Blended(font, text.c_str(), SDL_Color{objectColor_.getR(), objectColor_.getG(), objectColor_.getB(), objectColor_.getA()});
+    };
+
+    void free() {SDL_FreeSurface(message_);};
+    ~TextObject() { free(); };
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
