@@ -3,7 +3,7 @@
 
 Window::Window(const std::string& Caption, int sizeW, int sizeH)
     : isDestroyed(false) {
-    window_ = SDL_CreateWindow(Caption.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, sizeW, sizeH, SDL_WINDOW_SHOWN | SDL_WINDOW_MAXIMIZED);
+    window_ = SDL_CreateWindow(Caption.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, sizeW, sizeH, SDL_WINDOW_SHOWN);
     if (window_ == NULL) {
         std::cout << "Window Error: " << SDL_GetError() << std::endl;
         throw;
@@ -67,6 +67,7 @@ SDL_Texture* Window::loadTextureFromFile(const std::string& Path) {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void Window::destroy() {
+    SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
     isDestroyed = true;
 }
