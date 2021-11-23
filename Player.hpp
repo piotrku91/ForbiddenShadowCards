@@ -31,4 +31,14 @@ public:
     void DecrasePoints(size_t amount);
     void loadTeamToBattle(const std::string& teamName);
     PlayerTeamMap loadTeamToEdit(const std::string& teamName);
+
+    Player(std::vector<std::shared_ptr<CharacterCard>>& allCards, std::vector<std::shared_ptr<Card>>& allSkillCards){
+    // TEMPORARY TEAM CREATION
+
+   playerTeams.insert({"mainteam", PlayerTeamMap{allCards[0],allCards[1],allCards[2],allSkillCards}});
+    loadTeamToBattle("mainteam");
+    fillSlots();
+
+    }
 };
+

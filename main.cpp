@@ -1,13 +1,15 @@
 #include <memory>
 #include <vector>
 #include <iostream>
-#include "CardsActionManager.hpp"
+
+// Graphics layer libs
 #include "window.hpp"
 #include "TextureManager.hpp"
 #include "Raw.hpp"
 #include "Color.hpp"
+#include "CardsActionManager.hpp"
 
-//CardsActionManager CAM;
+CardsActionManager CAM;
 constexpr auto MAX_X=800;
 constexpr auto MAX_Y=600; 
 constexpr auto PLAYERS_AREA_W=500; 
@@ -48,7 +50,6 @@ Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"battle 1 
 Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"battle 1 ar", MAX_X/2 - 80, MAX_Y/2, 70, 100, Color{255,255,255,255}}));
 Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"battle 1 ar", MAX_X/2 + 80, MAX_Y/2, 70, 100, Color{255,255,255,255}}));
 //Objects.push_back(std::make_shared<SimpleRectObject>(SimpleRectObject{"battle 1 ar", MAX_X -100, MAX_Y- BIGCARD_AREA_H - 120, 100, 100, Color{255,255,100,255}}));
-
 
 // Render section
 mainWindow.clear();
