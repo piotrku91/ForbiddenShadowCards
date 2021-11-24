@@ -10,6 +10,7 @@ const std::vector<std::shared_ptr<Card>>& Player::getActualSlots() {
 }
 
 Action Player::fillSlots() {
+    if (skillsCardsSet.empty()) {return Action::NoCards;};
     while (skillsCardsSlots.size() < 5) {
         if (!skillsCardsSet.empty()) {
             skillsCardsSlots.push_back(skillsCardsSet.top());
@@ -37,7 +38,7 @@ void Player::swapCardToPoint(size_t slotIndex, size_t Multiplicator) {
 }
 
 Action Player::tryUseCard(size_t slotIndex) {
-    if (skillsCardsSlots.at(slotIndex)->getPointCost() >= actionPoints_) {
+    if (skillsCardsSlots.at(slotIndex)->getPointCost() <= actionPoints_) {
         DecrasePoints(skillsCardsSlots.at(slotIndex)->getPointCost());
         return Action::CardUseAction;
     }
@@ -57,12 +58,11 @@ void Player::loadTeamToBattle(const std::string& teamName) {
         characterCardsSet[1] = std::get<1>(playerTeams[teamName]);
         characterCardsSet[2] = std::get<2>(playerTeams[teamName]);
 
+
         for (auto& card : std::get<3>(playerTeams[teamName])) {
+            if (skillsCardsSet.size()<50) {
             skillsCardsSet.push(card);
+            };
         }
     }
-}
-
-PlayerTeamMap Player::loadTeamToEdit(const std::string& teamName) {
-        return PlayerTeamMap(std::get<0>(playerTeams[teamName]),std::get<1>(playerTeams[teamName]),std::get<2>(playerTeams[teamName]),std::get<3>(playerTeams[teamName]));
 }
